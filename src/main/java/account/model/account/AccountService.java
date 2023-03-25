@@ -12,9 +12,13 @@ import java.util.stream.Collectors;
  */
 public class AccountService {
     public List<Account> findAccountsByStatus(AccountStatus status) {
-        return AccountDB.accountDB.stream()
-                .filter(account -> account.getStatus().equals(status))
-                .collect(Collectors.toList());
+        List<Account> list = new ArrayList<>();
+        for (Account account : AccountDB.accountDB) {
+            if (account.getStatus().equals(status)) {
+                list.add(account);
+            }
+        }
+        return list;
     }
 
     public Map<AccountStatus, List<Account>> findAllAccountsGroupByStatus() {

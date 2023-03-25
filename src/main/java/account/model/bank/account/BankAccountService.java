@@ -12,10 +12,13 @@ public class BankAccountService {
         if (kontoNummer == null) {
             return null;
         }
-        return BankAccountDB.bankAccountsDB.stream()
-                .filter(bankAccount -> bankAccount.getKontoNummer() != null)
-                .filter(bankAccount -> bankAccount.getKontoNummer().equals(kontoNummer))
-                .findFirst()
-                .orElse(null);
+        for (BankAccount bankAccount : BankAccountDB.bankAccountsDB) {
+            if (bankAccount.getKontoNummer() != null) {
+                if (bankAccount.getKontoNummer().equals(kontoNummer)) {
+                    return bankAccount;
+                }
+            }
+        }
+        return null;
     }
 }

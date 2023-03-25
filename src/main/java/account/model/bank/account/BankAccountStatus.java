@@ -4,13 +4,13 @@ package account.model.bank.account;
  * @author Andrej Reutow
  * created on 25.03.2023
  */
-public enum BankAccounStatus {
+public enum BankAccountStatus {
 
     ACTIVE("A"), INACTIVE("I");
 
     private final String code;
 
-    BankAccounStatus(String code) {
+    BankAccountStatus(String code) {
         this.code = code;
     }
 

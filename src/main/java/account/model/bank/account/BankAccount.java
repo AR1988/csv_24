@@ -16,7 +16,6 @@ public class BankAccount {
     private final Bank bank;
     private final BankAccounStatus status;
 
-
     public BankAccount(Integer kontoNummer, Bank bank, BankAccounStatus status) {
         this.id = generateId();
         this.kontoNummer = kontoNummer;

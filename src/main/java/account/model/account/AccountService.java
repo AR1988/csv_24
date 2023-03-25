@@ -30,4 +30,8 @@ public class AccountService {
         }
         return result;
     }
+
+    public void save(Account account) {
+        AccountDB.accountDB.add(account);
+    }
 }

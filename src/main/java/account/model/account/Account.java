@@ -15,21 +15,21 @@ public class Account {
 
     private final Long id;
     private final String firstName;
-    private final String LastName;
+    private final String lastName;
     private List<BankAccount> bankAccounts = new ArrayList<>();
     private final AccountStatus status;
 
     public Account(String firstName, String lastName, AccountStatus status) {
         this.id = generatgeId();
         this.firstName = firstName;
-        LastName = lastName;
+        this.lastName = lastName;
         this.status = status;
     }
 
     public Account(String firstName, String lastName, List<BankAccount> bankAccounts, AccountStatus status) {
         this.id = generatgeId();
         this.firstName = firstName;
-        LastName = lastName;
+        this.lastName = lastName;
         this.bankAccounts = bankAccounts;
         this.status = status;
     }
@@ -59,7 +59,7 @@ public class Account {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public List<BankAccount> getBankAccounts() {
@@ -75,11 +75,11 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id) && Objects.equals(firstName, account.firstName) && Objects.equals(LastName, account.LastName) && Objects.equals(bankAccounts, account.bankAccounts) && status == account.status;
+        return Objects.equals(id, account.id) && Objects.equals(firstName, account.firstName) && Objects.equals(lastName, account.lastName) && Objects.equals(bankAccounts, account.bankAccounts) && status == account.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, LastName, bankAccounts, status);
+        return Objects.hash(id, firstName, lastName, bankAccounts, status);
     }
 }

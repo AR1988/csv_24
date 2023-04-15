@@ -14,10 +14,9 @@ public class BankAccount {
     private final Long id;
     private final Integer kontoNummer;
     private final Bank bank;
-    private final BankAccounStatus status;
+    private final BankAccountStatus status;
 
-
-    public BankAccount(Integer kontoNummer, Bank bank, BankAccounStatus status) {
+    public BankAccount(Integer kontoNummer, Bank bank, BankAccountStatus status) {
         this.id = generateId();
         this.kontoNummer = kontoNummer;
         this.bank = bank;
@@ -40,7 +39,7 @@ public class BankAccount {
         return bank;
     }
 
-    public BankAccounStatus getStatus() {
+    public BankAccountStatus getStatus() {
         return status;
     }
 

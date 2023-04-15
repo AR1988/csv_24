@@ -1,2 +1,4 @@
 # Project exclude paths
 /target/
+/.idea/
+/csv_v2.iml

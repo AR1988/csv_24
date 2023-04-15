@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Andrej Reutow
@@ -12,9 +11,13 @@ import java.util.stream.Collectors;
  */
 public class AccountService {
     public List<Account> findAccountsByStatus(AccountStatus status) {
-        return AccountDB.accountDB.stream()
-                .filter(account -> account.getStatus().equals(status))
-                .collect(Collectors.toList());
+        List<Account> list = new ArrayList<>();
+        for (Account account : AccountDB.accountDB) {
+            if (account.getStatus().equals(status)) {
+                list.add(account);
+            }
+        }
+        return list;
     }
 
     public Map<AccountStatus, List<Account>> findAllAccountsGroupByStatus() {
@@ -29,5 +32,9 @@ public class AccountService {
             }
         }
         return result;
+    }
+
+    public void save(Account account) {
+        AccountDB.accountDB.add(account);
     }
 }

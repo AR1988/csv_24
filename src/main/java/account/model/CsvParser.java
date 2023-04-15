@@ -5,6 +5,7 @@ import model.TableName;
 import model.TransactionType;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -50,6 +51,10 @@ public class CsvParser {
             errors.add(String.format(ERROR_MSG_PARSE_TO_OT_ENUM, columnName, value));
         }
         return result;
+    }
+
+    public static LocalDate toDate(String value, List<String> errors, String columnName) {
+        return null;
     }
 
     public static TransactionType toTransactionTypeEnum(String value, List<String> errors, String columnName) {

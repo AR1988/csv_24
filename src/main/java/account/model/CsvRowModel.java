@@ -4,6 +4,7 @@ import model.OperationType;
 import model.TableName;
 import model.TransactionType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -12,8 +13,9 @@ import java.util.List;
  */
 public class CsvRowModel {
     private static final int NUMBER_OF_COLUMNS = 18;
-    private int rowNumber;
-    private List<String> columns;
+
+    private final int rowNumber;
+    private final List<String> columns;
     private final List<String> errors;
     private final List<String> columnNames;
 
@@ -21,17 +23,17 @@ public class CsvRowModel {
     private TableName table;
     private TransactionType transaktionTyp;
     private OperationType operationTyp;
-    private String transactionsCode;
+    private Integer transactionsCode;
     private Integer transaktionNummer;
-    private String additionalTransaktionNumber;
-    private String betrag;
-    private String currency;
-    private String kontonr;
+    private Integer additionalTransaktionNumber;
+    private Integer betrag;
+    private Integer currency;
+    private Long kontonr;
     private Long blz;
-    private String transDatum;
-    private String valuta;
+    private LocalDate transDatum;
+    private LocalDate valuta;
     private Long mandateferenz;
-    private String kundeId;
+    private Long kundeId;
     private String vw1;
     private String vw2;
     private String bemerkung1;
@@ -50,17 +52,17 @@ public class CsvRowModel {
         this.table = CsvParser.toTableEnum(columns.get(0), errors, columnNames.get(0));
         this.transaktionTyp = CsvParser.toTransactionTypeEnum(columns.get(1), errors, columnNames.get(1));
         this.operationTyp = CsvParser.toOperationTypeEnum(columns.get(2), errors, columnNames.get(2));
-        this.transactionsCode = columns.get(3);
+        this.transactionsCode = CsvParser.toInt(columns.get(3), errors, columnNames.get(3));
         this.transaktionNummer = CsvParser.toInt(columns.get(4), errors, columnNames.get(4));
-        this.additionalTransaktionNumber = columns.get(5);
-        this.betrag = columns.get(6);
-        this.currency = columns.get(7);
-        this.kontonr = columns.get(8);
+        this.additionalTransaktionNumber = CsvParser.toInt(columns.get(5), errors, columnNames.get(5));
+        this.betrag = CsvParser.toInt(columns.get(6), errors, columnNames.get(6));
+        this.currency = CsvParser.toInt(columns.get(7), errors, columnNames.get(7));
+        this.kontonr = CsvParser.toLong(columns.get(8), errors, columnNames.get(8));
         this.blz = CsvParser.toLong(columns.get(9), errors, columnNames.get(9));
-        this.transDatum = columns.get(10);
-        this.valuta = columns.get(11);
+        this.transDatum = CsvParser.toDate(columns.get(10), errors, columnNames.get(10));
+        this.valuta = CsvParser.toDate(columns.get(11), errors, columnNames.get(11));
         this.mandateferenz = CsvParser.toLong(columns.get(12), errors, columnNames.get(12));
-        this.kundeId = columns.get(13);
+        this.kundeId = CsvParser.toLong(columns.get(13), errors, columnNames.get(13));
         this.vw1 = columns.get(14);
         this.vw2 = columns.get(15);
         this.bemerkung1 = columns.get(16);
@@ -112,7 +114,7 @@ public class CsvRowModel {
         return operationTyp;
     }
 
-    public String getTransactionsCode() {
+    public Integer getTransactionsCode() {
         return transactionsCode;
     }
 
@@ -120,19 +122,19 @@ public class CsvRowModel {
         return transaktionNummer;
     }
 
-    public String getAdditionalTransaktionNumber() {
+    public Integer getAdditionalTransaktionNumber() {
         return additionalTransaktionNumber;
     }
 
-    public String getBetrag() {
+    public Integer getBetrag() {
         return betrag;
     }
 
-    public String getCurrency() {
+    public Integer getCurrency() {
         return currency;
     }
 
-    public String getKontonr() {
+    public Long getKontonr() {
         return kontonr;
     }
 
@@ -140,11 +142,11 @@ public class CsvRowModel {
         return blz;
     }
 
-    public String getTransDatum() {
+    public LocalDate getTransDatum() {
         return transDatum;
     }
 
-    public String getValuta() {
+    public LocalDate getValuta() {
         return valuta;
     }
 
@@ -152,7 +154,7 @@ public class CsvRowModel {
         return mandateferenz;
     }
 
-    public String getKundeId() {
+    public Long getKundeId() {
         return kundeId;
     }
 

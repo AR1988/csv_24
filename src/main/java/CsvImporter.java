@@ -16,11 +16,14 @@ public class CsvImporter {
 
         List<CsvRowModel> csvRowModels = new ArrayList<>();
         for (int i = 1; i < strings.size(); i++) {
+            List<String> errors = new ArrayList<>();
             List<String> splitColumns = List.of(strings.get(i).split(";", -1));
-            CsvRowModel csvRowModel = new CsvRowModel(splitColumns, (i + 1));
+            CsvRowModel csvRowModel = new CsvRowModel(splitColumns, (i + 1), errors);
             csvRowModels.add(csvRowModel);
         }
+        System.out.println();
     }
+
 
 
     public static List<String> readFile(String pathToFile) {

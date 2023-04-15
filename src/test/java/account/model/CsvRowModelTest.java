@@ -16,7 +16,7 @@ class CsvRowModelTest {
     @Test
     void test_createCsvRowModel() {
         List<String> columns = fillArray(19);
-        CsvRowModel csvRowModel = new CsvRowModel(columns, 1);
+        CsvRowModel csvRowModel = new CsvRowModel(columns, 1, new ArrayList<>());
 
         assertEquals("test_0", csvRowModel.getTable());
         assertEquals("test_1", csvRowModel.getTransaktionTyp());
@@ -28,7 +28,7 @@ class CsvRowModelTest {
     void test_createCsvRowModel_expectedException() {
         Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             List<String> columns = fillArray(10);
-            new CsvRowModel(columns, 1);
+            new CsvRowModel(columns, 1, new ArrayList<>());
         });
     }
 

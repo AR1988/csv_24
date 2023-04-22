@@ -25,7 +25,6 @@ public class CsvImporter {
     }
 
 
-
     public static List<String> readFile(String pathToFile) {
         List<String> result = new ArrayList<>();
         try {

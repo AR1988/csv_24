@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class CsvRowModel {
     private static final int NUMBER_OF_COLUMNS = 18;
+    private static final List<String> columnNames = getColumnNames();
 
     private final int rowNumber;
     private final List<String> columns;
     private final List<String> errors;
-    private final List<String> columnNames;
 
 
     private TableName table;
@@ -26,7 +26,7 @@ public class CsvRowModel {
     private Integer transactionsCode;
     private Integer transaktionNummer;
     private Integer additionalTransaktionNumber;
-    private Integer betrag;
+    private Double betrag;
     private Integer currency;
     private Long kontonr;
     private Long blz;
@@ -44,30 +44,29 @@ public class CsvRowModel {
         this.columns = columns;
         this.rowNumber = rowNumber;
         this.errors = errors;
-        this.columnNames = getColumnNames();
         init();
     }
 
     private void init() {
-        this.table = CsvParser.toTableEnum(columns.get(0), errors, columnNames.get(0));
-        this.transaktionTyp = CsvParser.toTransactionTypeEnum(columns.get(1), errors, columnNames.get(1));
-        this.operationTyp = CsvParser.toOperationTypeEnum(columns.get(2), errors, columnNames.get(2));
-        this.transactionsCode = CsvParser.toInt(columns.get(3), errors, columnNames.get(3));
-        this.transaktionNummer = CsvParser.toInt(columns.get(4), errors, columnNames.get(4));
-        this.additionalTransaktionNumber = CsvParser.toInt(columns.get(5), errors, columnNames.get(5));
-        this.betrag = CsvParser.toInt(columns.get(6), errors, columnNames.get(6));
-        this.currency = CsvParser.toInt(columns.get(7), errors, columnNames.get(7));
-        this.kontonr = CsvParser.toLong(columns.get(8), errors, columnNames.get(8));
-        this.blz = CsvParser.toLong(columns.get(9), errors, columnNames.get(9));
-        this.transDatum = CsvParser.toDate(columns.get(10), errors, columnNames.get(10));
-        this.valuta = CsvParser.toDate(columns.get(11), errors, columnNames.get(11));
-        this.mandateferenz = CsvParser.toLong(columns.get(12), errors, columnNames.get(12));
-        this.kundeId = CsvParser.toLong(columns.get(13), errors, columnNames.get(13));
-        this.vw1 = columns.get(14);
-        this.vw2 = columns.get(15);
-        this.bemerkung1 = columns.get(16);
-        this.bemerkung2 = columns.get(17);
-        this.bemerkung3 = columns.get(18);
+        this.table = CsvParser.toTableEnum(columns.get(0), errors, columnNames.get(0), true);
+        this.transaktionTyp = CsvParser.toTransactionTypeEnum(columns.get(1), errors, columnNames.get(1), true);
+        this.operationTyp = CsvParser.toOperationTypeEnum(columns.get(2), errors, columnNames.get(2), true);
+        this.transactionsCode = CsvParser.toInt(columns.get(3), errors, columnNames.get(3), true);
+        this.transaktionNummer = CsvParser.toInt(columns.get(4), errors, columnNames.get(4), true);
+        this.additionalTransaktionNumber = CsvParser.toInt(columns.get(5), errors, columnNames.get(5), true);
+        this.betrag = CsvParser.toDouble(columns.get(6), errors, columnNames.get(6), true);
+        this.currency = CsvParser.toInt(columns.get(7), errors, columnNames.get(7), true);
+        this.kontonr = CsvParser.toLong(columns.get(8), errors, columnNames.get(8), true);
+        this.blz = CsvParser.toLong(columns.get(9), errors, columnNames.get(9), true);
+        this.transDatum = CsvParser.toDate(columns.get(10), errors, columnNames.get(10), true);
+        this.valuta = CsvParser.toDate(columns.get(11), errors, columnNames.get(11), true);
+        this.mandateferenz = CsvParser.toLong(columns.get(12), errors, columnNames.get(12), TransactionType.SEPA.equals(transaktionTyp));
+        this.kundeId = CsvParser.toLong(columns.get(13), errors, columnNames.get(13), true);
+        this.vw1 = CsvParser.toString(columns.get(14), errors, columnNames.get(14), true);
+        this.vw2 = CsvParser.toString(columns.get(15), errors, columnNames.get(15), false);
+        this.bemerkung1 = CsvParser.toString(columns.get(16), errors, columnNames.get(16), false);
+        this.bemerkung2 = CsvParser.toString(columns.get(17), errors, columnNames.get(17), false);
+        this.bemerkung3 = CsvParser.toString(columns.get(18), errors, columnNames.get(18), false);
     }
 
     private static List<String> getColumnNames() {
@@ -126,7 +125,7 @@ public class CsvRowModel {
         return additionalTransaktionNumber;
     }
 
-    public Integer getBetrag() {
+    public Double getBetrag() {
         return betrag;
     }
 

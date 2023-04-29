@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static account.model.CsvParser.ERROR_MSG_PARSE_TO_LONG;
+import static account.model.CsvParser.ERROR_MSG_REQUIRED;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -18,37 +20,51 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CsvParserTest {
 
-    private List<String> errors;
+    private final List<String> errors = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        errors = new ArrayList<>();
+        errors.clear();
     }
 
-    //    @Test
-//    void test_mapToLong_throwException() {
-//        Long result = CsvParser.toLong("abc", errors, columnNames.get(9));
-//
-//        assertNull(result);
-//        assertEquals(1, errors.size());
-//        assertEquals(String.format(CsvParser.ERROR_MSG_PARSE_TO_LONG, "abc"), errors.get(0));
-//    }
-//
-//    @Test
-//    void test_mapToLong_return1() {
-//        Long result = CsvParser.toLong("1", errors, columnNames.get(9));
-//        assertEquals(1L, result);
-//    }
-//
-//    @Test
-//    void test_mapToInt_addMsgtoErrorList() {
-//        Integer result = CsvParser.toInt("abc", errors, columnNames.get(4));
-//
-//        assertNull(result);
-//        assertEquals(1, errors.size());
-//        assertEquals(String.format(CsvParser.ERROR_MSG_PARSE_TO_INT, "abc"), errors.get(0));
-//    }
-//
+    @Test
+    void test_mapToLong_returnNullWhenValueNullAndRequired() {
+        Long result = CsvParser.toLong(null, errors, "SOME_NAME", true);
+        assertNull(result);
+        assertEquals(1, errors.size());
+        assertEquals(String.format(ERROR_MSG_REQUIRED, "SOME_NAME"), errors.get(0));
+    }
+
+    @Test
+    void test_mapToLong_returnNullWhenValueNullAndRequiredFalse() {
+        Long result = CsvParser.toLong(null, errors, "SOME_NAME", false);
+        assertNull(result);
+        assertEquals(1, errors.size());
+        assertEquals(String.format(ERROR_MSG_PARSE_TO_LONG, "SOME_NAME", "null"), errors.get(0));
+    }
+
+    @Test
+    void test_mapToLong_returnNullWhenValueValidAndRequiredTrue_return1234() {
+        Long result = CsvParser.toLong("1234", errors, "SOME_NAME", true);
+        assertEquals(1234L,result);
+        assertEquals(0, errors.size());
+    }
+
+    @Test
+    void test_mapToLong_returnNullWhenValueValidAndRequiredFalse_return1234() {
+        Long result = CsvParser.toLong("1234", errors, "SOME_NAME", false);
+        assertEquals(1234L,result);
+        assertEquals(0, errors.size());
+    }
+
+    @Test
+    void test_mapToLong_returnNullWhenValueValidAndRequiredFalse_returnAddErrorMessage() {
+        Long result = CsvParser.toLong("1234A", errors, "SOME_NAME", false);
+        assertNull(result);
+        assertEquals(1, errors.size());
+        assertEquals(String.format(ERROR_MSG_PARSE_TO_LONG, "SOME_NAME", "1234A"), errors.get(0));
+    }
+
     @Test
     void test_mapToInt_return1() {
         TableName result = CsvParser.toTableEnum(null, errors, "SOME_NAME", true);
@@ -103,7 +119,7 @@ class CsvParserTest {
 
         assertNull(result);
         assertEquals(1, errors.size(), "Errors size: " + errors.size());
-        assertEquals(String.format(CsvParser.ERROR_MSG_REQUIRED, columName), errors.get(0));
+        assertEquals(String.format(ERROR_MSG_REQUIRED, columName), errors.get(0));
     }
 
     @Test
